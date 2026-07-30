@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youssef Osama Zakaria — Data Analyst & Power BI Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Chart.js moved here to ensure it loads before the page renders -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root{
+    --navy:#11192A;
+    --navy-2:#1A2540;
+    --navy-3:#212d4a;
+    --cream:#F3EEE1;
+    --cream-line:#DCD3BC;
+    --green:#3C8770;
+    --green-deep:#2F6F5E;
+    --copper:#D08F52;
+    --ink:#21241F;
+    --cream-text:#ECE6D6;
+    --muted:#8A93A6;
+    --muted-cream:#6B6456;
+    --font-display:'Fraunces', serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--navy);
+    color:var(--cream-text);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(17,25,42,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav__row{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1080px;margin:0 auto;}
+  .nav__mark{font-family:var(--font-mono);font-weight:600;font-size:14px;letter-spacing:0.06em;color:var(--cream-text);text-decoration:none;border:1px solid var(--green);padding:6px 10px;border-radius:3px;}
+  .nav__links{display:flex;gap:26px;list-style:none;margin:0;padding:0;}
+  .nav__links a{font-size:14px;text-decoration:none;color:var(--muted);transition:color .2s ease;}
+  .nav__links a:hover{color:var(--cream-text);}
+  .nav__cta{font-family:var(--font-mono);font-size:13px;text-decoration:none;color:var(--navy);background:var(--green);padding:8px 14px;border-radius:3px;font-weight:600;white-space:nowrap;}
+  .nav__cta:hover{background:var(--green-deep);}
+  @media (max-width:680px){ .nav__links{display:none;} }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:84px 0 64px;position:relative;overflow:hidden;}
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(680px 380px at 85% -10%, rgba(60,135,112,0.18), transparent 60%),
+      radial-gradient(520px 320px at 0% 100%, rgba(208,143,82,0.10), transparent 60%);
+    pointer-events:none;
+  }
+  .hero__inner{position:relative;}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--green);margin:0 0 18px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(60,135,112,0.25);}
+  .hero h1{
+    font-family:var(--font-display);font-weight:600;font-size:clamp(40px,7vw,72px);
+    line-height:1.04;margin:0 0 22px;color:#FBF8F1;letter-spacing:-0.01em;
+  }
+  .hero h1 em{font-style:italic;color:var(--green);font-weight:500;}
+  .hero p.lede{font-size:18px;max-width:560px;color:#C9CCD6;margin:0 0 34px;}
+  .hero__ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:56px;}
+  .btn{
+    font-family:var(--font-mono);font-size:13.5px;font-weight:600;text-decoration:none;
+    padding:12px 20px;border-radius:3px;display:inline-flex;align-items:center;gap:8px;
+    transition:transform .15s ease, background .2s ease, border-color .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn--solid{background:var(--green);color:#0c1320;}
+  .btn--solid:hover{background:#4ea08a;}
+  .btn--line{border:1px solid rgba(236,230,214,0.28);color:var(--cream-text);}
+  .btn--line:hover{border-color:var(--cream-text);}
+
+  /* ---------- Ledger strip (signature element) ---------- */
+  .ledger{
+    background:var(--cream);
+    border-radius:6px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.45);
+    overflow:hidden;
+  }
+  .ledger__head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:16px 24px 10px;border-bottom:1px solid var(--cream-line);
+  }
+  .ledger__head span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:0.1em;color:var(--muted-cream);text-transform:uppercase;}
+  .ledger__row{
+    display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:18px;
+    padding:16px 24px;border-bottom:1px solid var(--cream-line);
+    opacity:0;transform:translateY(8px);animation:rise .5s ease forwards;
+  }
+  .ledger__row:last-child{border-bottom:none;}
+  .ledger__row:nth-child(2){animation-delay:.05s;}
+  .ledger__row:nth-child(3){animation-delay:.18s;}
+  .ledger__row:nth-child(4){animation-delay:.31s;}
+  @keyframes rise{to{opacity:1;transform:translateY(0);}}
+  .ledger__label{font-size:14.5px;color:var(--ink);font-weight:500;}
+  .ledger__value{font-family:var(--font-mono);font-size:19px;font-weight:600;color:var(--green-deep);}
+  .ledger__check{width:20px;height:20px;border-radius:50%;background:var(--green-deep);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .ledger__check svg{width:11px;height:11px;}
+  @media (max-width:560px){ .ledger__label{font-size:13px;} .ledger__value{font-size:16px;} }
+
+  /* ---------- Ledger carousel (hero, auto-swaps every 5s) ---------- */
+  .ledger-carousel{
+    position:relative;
+    background:var(--cream);
+    border-radius:6px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.45);
+  }
+  .ledger-viewport{overflow:hidden;border-radius:6px;}
+  .ledger-track{
+    display:flex;
+    width:200%;
+    transition:transform .48s cubic-bezier(0.32,0.72,0,1);
+    will-change:transform;
+  }
+  .ledger-slide{flex:0 0 50%;width:50%;min-width:0;}
+  @media (prefers-reduced-motion:reduce){
+    .ledger-track{transition:none;}
+  }
+  .ledger-dots{
+    position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);
+    display:flex;gap:6px;padding:5px 8px;border-radius:20px;
+    background:rgba(17,25,42,0.82);backdrop-filter:blur(4px);
+    border:1px solid rgba(236,230,214,0.14);z-index:20;
+  }
+  .ledger-dot{position:relative;width:26px;height:5px;border-radius:3px;background:rgba(236,230,214,0.25);overflow:hidden;cursor:pointer;border:none;padding:0;}
+  .ledger-fill{position:absolute;inset:0;width:0%;background:var(--green);border-radius:3px;}
+  .ledger-dot.active .ledger-fill{animation:ledger-progress 5s linear forwards;}
+  @keyframes ledger-progress{from{width:0%;}to{width:100%;}}
+
+
+  /* ---------- Section shell ---------- */
+  .section{padding:74px 0;}
+  .section--alt{background:var(--navy-2);}
+  .section__head{margin-bottom:38px;max-width:640px;}
+  .section__num{font-family:var(--font-mono);font-size:12px;color:var(--green);letter-spacing:0.1em;margin:0 0 10px;}
+  .section__title{font-family:var(--font-display);font-size:clamp(26px,4vw,36px);font-weight:600;margin:0;color:#FBF8F1;}
+  .section__sub{color:var(--muted);margin:14px 0 0;font-size:15.5px;}
+
+  /* ---------- About ---------- */
+  .about__grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start;}
+  .about__text p{color:#C9CCD6;font-size:16px;margin:0 0 16px;}
+  .about__card{
+    background:var(--cream);border-radius:6px;padding:24px 24px 8px;
+  }
+  .about__card h4{font-family:var(--font-mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted-cream);margin:0 0 14px;}
+  .about__fact{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--cream-line);font-size:14px;color:var(--ink);}
+  .about__fact:last-child{border-bottom:none;}
+  .about__fact b{font-family:var(--font-mono);font-weight:600;color:var(--green-deep);}
+  @media (max-width:780px){ .about__grid{grid-template-columns:1fr;} }
+
+  /* ---------- Experience ---------- */
+  .xp{border-left:1px solid rgba(236,230,214,0.16);padding-left:28px;position:relative;}
+  .xp__item{margin-bottom:40px;position:relative;}
+  .xp__item:last-child{margin-bottom:0;}
+  .xp__item::before{
+    content:"";position:absolute;left:-33px;top:4px;width:9px;height:9px;border-radius:50%;
+    background:var(--navy-2);border:2px solid var(--green);
+  }
+  .xp__row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .xp__role{font-size:18px;font-weight:600;color:#FBF8F1;}
+  .xp__role span{color:var(--green);font-weight:500;}
+  .xp__date{font-family:var(--font-mono);font-size:12.5px;color:var(--muted);white-space:nowrap;}
+  .xp ul{margin:0;padding:0;list-style:none;}
+  .xp li{position:relative;padding-left:18px;color:#C9CCD6;font-size:15px;margin-bottom:8px;}
+  .xp li::before{content:"–";position:absolute;left:0;color:var(--green);}
+
+  /* ---------- Project ---------- */
+  .proj{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .proj__meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px;}
+  .tag{font-family:var(--font-mono);font-size:12px;color:var(--cream-text);border:1px solid rgba(236,230,214,0.22);padding:5px 10px;border-radius:20px;}
+  .proj__text p{color:#C9CCD6;font-size:15.5px;margin:0 0 14px;}
+  .proj ul{margin:0 0 20px;padding:0;list-style:none;}
+  .proj li{position:relative;padding-left:18px;color:#C9CCD6;font-size:15px;margin-bottom:9px;}
+  .proj li::before{content:"–";position:absolute;left:0;color:var(--green);}
+  .proj__stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px;}
+  .stat{background:var(--navy-3);border-radius:6px;padding:14px 10px;text-align:center;}
+  .stat b{display:block;font-family:var(--font-mono);font-size:21px;color:var(--copper);}
+  .stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;}
+  @media (max-width:780px){ .proj{grid-template-columns:1fr;} }
+  .proj__sub{margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid rgba(236,230,214,0.1);}
+  .proj__sub:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+  .proj__sub-title{font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--cream);margin:0 0 4px;letter-spacing:-0.01em;}
+
+  /* ---------- Skills ---------- */
+  .skills__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .skill__card{background:var(--cream);border-radius:6px;padding:22px;}
+  .skill__card h4{font-family:var(--font-mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--green-deep);margin:0 0 14px;}
+  .skill__chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chip{font-size:12.5px;background:#fff;border:1px solid var(--cream-line);color:var(--ink);padding:5px 10px;border-radius:20px;}
+  @media (max-width:780px){ .skills__grid{grid-template-columns:1fr;} }
+
+  /* ---------- Footer / education / certs / contact ---------- */
+  .foot__grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:50px;}
+  .foot__block h4{font-family:var(--font-mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--green);margin:0 0 14px;}
+  .foot__line{display:flex;justify-content:space-between;font-size:14.5px;color:#C9CCD6;padding:10px 0;border-bottom:1px solid rgba(236,230,214,0.1);}
+  .foot__line span{color:var(--muted);font-family:var(--font-mono);font-size:12.5px;}
+  @media (max-width:780px){ .foot__grid{grid-template-columns:1fr;} }
+
+  .contact{text-align:center;padding-top:8px;border-top:1px solid rgba(236,230,214,0.1);padding-bottom:10px;}
+  .contact h2{font-family:var(--font-display);font-size:clamp(28px,5vw,42px);color:#FBF8F1;margin:0 0 14px;}
+  .contact p{color:var(--muted);max-width:480px;margin:0 auto 30px;font-size:15.5px;}
+  .contact__row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:46px;}
+  .bottombar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-family:var(--font-mono);font-size:12px;color:var(--muted);padding-top:24px;border-top:1px solid rgba(236,230,214,0.08);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__row">
+    <a href="#top" class="nav__mark">YO</a>
+    <ul class="nav__links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#project">Project</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav__cta" href="./Youssef_Osama_CV_Fixed.docx" download>Download CV ↓</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero__inner">
+    <p class="eyebrow">Data Analyst · Power BI Developer · Cairo, Egypt</p>
+    <h1>Numbers that<br><em>reconcile.</em></h1>
+    <p class="lede">I spent two years catching mismatches in financial records before they became reporting errors. Now I build the dashboards that make sure they never have to be caught twice.</p>
+    <div class="hero__ctas">
+      <a class="btn btn--solid" href="mailto:yousef.usama2014@gmail.com">Email me</a>
+      <a class="btn btn--line" href="https://linkedin.com/in/youssefusama-9991aa37a" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn--line" href="tel:+201065887585">+20 106 588 7585</a>
+    </div>
+
+    <div id="ledger-carousel-root" class="ledger-carousel">
+      <div class="ledger-viewport">
+        <div class="ledger-track">
+          <div class="ledger-slide" data-slide="0">
+            <div class="ledger__head">
+              <span>Sales &amp; Operations BI Dashboard — Ledger</span>
+              <span>Balanced ✓</span>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__label">Data prep time</span>
+              <span class="ledger__value">↓ 70%</span>
+              <span class="ledger__check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1320" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__label">DAX measures shipped</span>
+              <span class="ledger__value">15+</span>
+              <span class="ledger__check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1320" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__label">Order audit coverage</span>
+              <span class="ledger__value">100%</span>
+              <span class="ledger__check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1320" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+          </div>
+
+          <div class="ledger-slide" data-slide="1">
+            <div class="ledger__head">
+              <span>Factors that Fuel Student Performance — Ledger</span>
+              <span>Balanced ✓</span>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__label">SQL queries written</span>
+              <span class="ledger__value">3</span>
+              <span class="ledger__check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1320" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__label">Avg score gain, 16+ vs 1-5 hrs</span>
+              <span class="ledger__value">+5.3 pts</span>
+              <span class="ledger__check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1320" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__label">Window-fn leaderboard</span>
+              <span class="ledger__value">Dense Rank</span>
+              <span class="ledger__check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1320" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ledger-dots">
+        <button type="button" class="ledger-dot active" data-idx="0" aria-label="Show Sales BI ledger"><span class="ledger-fill"></span></button>
+        <button type="button" class="ledger-dot" data-idx="1" aria-label="Show SQL project ledger"><span class="ledger-fill"></span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+(function(){
+  const root = document.getElementById('ledger-carousel-root');
+  const track = root.querySelector('.ledger-track');
+  const slides = root.querySelectorAll('.ledger-slide');
+  const dots = root.querySelectorAll('.ledger-dot');
+  let idx = 0;
+  let timer = null;
+
+  function show(i){
+    // slide the track — spatial continuity: each step moves one full viewport-width
+    track.style.transform = 'translateX(-' + (i * (100 / slides.length)) + '%)';
+
+    slides.forEach(function(s,n){ s.setAttribute('aria-hidden', n===i ? 'false' : 'true'); });
+
+    dots.forEach(function(d){
+      const fill = d.querySelector('.ledger-fill');
+      d.classList.remove('active');
+      fill.style.animation = 'none';
+      fill.style.width = '0%';
+    });
+    void root.offsetWidth; // force reflow so the restarted progress-bar animation actually replays
+    const activeDot = dots[i];
+    const activeFill = activeDot.querySelector('.ledger-fill');
+    activeDot.classList.add('active');
+    activeFill.style.animation = '';
+    activeFill.style.width = '';
+    idx = i;
+  }
+
+  function next(){ show((idx+1) % slides.length); }
+
+  function startTimer(){
+    clearInterval(timer);
+    timer = setInterval(next, 5000);
+  }
+
+  dots.forEach(function(d,n){
+    d.addEventListener('click', function(){ show(n); startTimer(); });
+  });
+
+  show(0);
+  startTimer();
+})();
+</script>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="section__num">01 — About</p>
+      <h2 class="section__title">From auditing ledgers to building dashboards</h2>
+    </div>
+    <div class="about__grid">
+      <div class="about__text">
+        <p>I'm a Management Information Systems graduate who started in financial auditing and ended up obsessed with BI. At Talaat Moustafa Group and Ecoway, my job was to make sure numbers were right before anyone reported them — cross-checking SAP entries, reconciling cheque flows, auditing every outgoing order against inventory.</p>
+        <p>On the side, I taught myself Power BI, Power Query, and DAX to go one step further: not just catching bad data, but building the dashboards that turn good data into answers people can act on without coming back to me first.</p>
+      </div>
+      <div class="about__card">
+        <h4>Quick facts</h4>
+        <div class="about__fact"><span>Based in</span><b>Cairo, Egypt</b></div>
+        <div class="about__fact"><span>Education</span><b>BSc, MIS</b></div>
+        <div class="about__fact"><span>Core tool</span><b>Power BI</b></div>
+        <div class="about__fact"><span>Background</span><b>Finance / Audit</b></div>
+        <div class="about__fact"><span>Open to</span><b>Data Analyst, BI</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="experience">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="section__num">02 — Experience</p>
+      <h2 class="section__title">Work history</h2>
+      <p class="section__sub">Two roles, no overlap — financial operations work that's really data analysis with a different name on the door.</p>
+    </div>
+    <div class="xp">
+      <div class="xp__item">
+        <div class="xp__row">
+          <div class="xp__role">Data Specialist <span>· Talaat Moustafa Group (TMG)</span></div>
+          <div class="xp__date">OCT 2024 — PRESENT</div>
+        </div>
+        <ul>
+          <li>Analyze and cross-validate financial records across branches in SAP, identifying mismatches between system entries and supporting documents before they become reporting errors.</li>
+          <li>Track and report on the full cheque lifecycle — collected, returned, withdrawn — for high-value transactions, giving the finance team a reliable, real-time data view of cash flow.</li>
+          <li>Reduced cross-branch data discrepancies by designing and rolling out standardized documentation templates, aligning every department on the same data format and definitions.</li>
+          <li>Run structured daily data audits and verification checks to support operational reporting and keep SAP data clean.</li>
+        </ul>
+      </div>
+      <div class="xp__item">
+        <div class="xp__row">
+          <div class="xp__role">Operations / Accountant <span>· Ecoway</span></div>
+          <div class="xp__date">JAN 2023 — SEP 2024</div>
+        </div>
+        <ul>
+          <li>Analyzed every outgoing customer order against purchase and inventory data, achieving 100% audit coverage and catching fulfillment mismatches before they shipped.</li>
+          <li>Reported on monthly net profit margins by analyzing expense and operational cost data, supported by daily data audits of revenue and incoming orders.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="project">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="section__num">03 — Featured Project</p>
+      <h2 class="section__title">Sales &amp; Operations BI Dashboard</h2>
+      <p class="section__sub">An executive-facing Power BI build that replaced static spreadsheet reporting with a live, drillable dashboard.</p>
+    </div>
+    <div class="proj">
+      <div class="proj__text">
+        <div class="proj__meta">
+          <span class="tag">Power Query</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">DAX</span>
+          <span class="tag">Power BI Service</span>
+        </div>
+        <p>Raw sales data came in messy, from multiple sources, full of duplicates and inconsistent formats. I automated the entire cleaning process in Power Query, then modeled it and layered in DAX to turn flat numbers into decisions.</p>
+        <ul>
+          <li>Automated data cleaning in Power Query — removing duplicates and standardizing formats, cutting prep time by ~70%.</li>
+          <li>Built an executive-facing dashboard covering revenue trends, top-10 customers, and regional performance with full drill-down.</li>
+          <li>Wrote 15+ DAX measures, including YTD revenue, rolling averages, and customer ranking logic.</li>
+          <li>Published to Power BI Service with scheduled refresh, shared via workspaces for live team access.</li>
+        </ul>
+        <div class="proj__stats">
+          <div class="stat"><b>70%</b><span>Less prep time</span></div>
+          <div class="stat"><b>15+</b><span>DAX measures</span></div>
+          <div class="stat"><b>Hrs</b><span>Not days, to report</span></div>
+        </div>
+      
+      </div>
+
+<!-- INTEGRATED AI WIDGET START -->
+      <div id="biw-root" class="biw">
+        <style>
+          #biw-root.biw{
+    --navy:#11192A;
+    --card:#1A2540;
+    --card-2:#212d4a;
+    --green:#3C8770;
+    --green-soft:rgba(60,135,112,0.16);
+    --copper:#D08F52;
+    --text:#ECE6D6;
+    --muted:#8A93A6;
+    --line:rgba(236,230,214,0.09);
+    --font-display:'Fraunces', serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+    box-sizing:border-box;
+    font-family:var(--font-body);
+    color:var(--text);
+    background:
+      radial-gradient(480px 260px at 92% -10%, rgba(60,135,112,0.14), transparent 60%),
+      var(--navy);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px;
+    height: auto;           /* Allows it to fit content naturally */
+    max-height: 600px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    overflow-y:auto;        /* Clean vertical scrolling if needed */
+    position:relative;
+  }
+
+          #biw-root *{box-sizing:border-box;}
+      
+          /* ---------- Header ---------- */
+          .biw-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+          .biw-title{display:flex;flex-direction:column;gap:2px;}
+          .biw-eyebrow{
+            font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+            color:var(--green);display:flex;align-items:center;gap:7px;margin:0;
+          }
+          .biw-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
+          .biw-h1{font-family:var(--font-display);font-weight:600;font-size:17px;margin:0;color:#FBF8F1;letter-spacing:-0.01em;}
+      
+          .biw-filters{display:flex;gap:8px;}
+          .biw-select{
+            font-family:var(--font-mono);font-size:11.5px;color:var(--text);
+            background:var(--card-2);border:1px solid var(--line);border-radius:6px;
+            padding:6px 10px;cursor:pointer;appearance:none;
+            background-image:linear-gradient(45deg,transparent 50%, var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+            background-position:calc(100% - 14px) center, calc(100% - 9px) center;
+            background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+            padding-right:26px;
+          }
+          .biw-select:hover{border-color:var(--green);}
+          .biw-select:focus{outline:2px solid var(--green);outline-offset:1px;}
+      
+          /* ---------- KPI row ---------- */
+          .biw-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+          .biw-kpi{
+            background:var(--card);border:1px solid var(--line);border-radius:8px;
+            padding:10px 12px;display:flex;flex-direction:column;gap:3px;
+            transition:transform .15s ease, border-color .15s ease;
+          }
+          .biw-kpi:hover{border-color:var(--green);transform:translateY(-1px);}
+          .biw-kpi-label{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+          .biw-kpi-value{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--text);line-height:1.1;}
+          .biw-kpi-sub{font-family:var(--font-mono);font-size:10px;color:var(--green);display:flex;align-items:center;gap:4px;}
+          .biw-kpi-sub.flat{color:var(--copper);}
+      
+          /* ---------- Charts grid ---------- */
+          .biw-grid{
+            display:grid;
+            grid-template-columns:1.15fr 0.85fr 1fr;
+            grid-template-rows:1fr;
+            gap:10px;
+            flex:1;
+            min-height:0;
+            min-width:0;
+          }
+          .biw-panel{
+            background:var(--card);border:1px solid var(--line);border-radius:8px;
+            padding:10px 12px 8px;display:flex;flex-direction:column;min-height:0;
+            min-width:0;
+          }
+          .biw-panel-title{
+            font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+            color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;
+          }
+          .biw-panel-title span.tag{color:var(--green);}
+          .biw-panel-body{position:relative;flex:1;min-height:0;}
+
+          .biw-col-stack .biw-panel{flex:1;min-height:0;}
+      
+          @media (max-width:640px){
+            .biw-kpis{grid-template-columns:1fr;}
+            .biw-grid{grid-template-columns:1fr;grid-template-rows:auto;overflow-y:auto;}
+            #biw-root.biw{height:auto;max-height:none;}
+          }
+        </style>
+      
+        <div class="biw-head">
+          <div class="biw-title">
+            <p class="biw-eyebrow">Power BI · Live Preview</p>
+            <h3 class="biw-h1">Sales &amp; Operations Executive Dashboard</h3>
+          </div>
+          <div class="biw-filters">
+            <select id="biw-region" class="biw-select" aria-label="Filter by region"></select>
+            <select id="biw-year" class="biw-select" aria-label="Filter by year"></select>
+          </div>
+        </div>
+      
+        <div class="biw-kpis">
+          <div class="biw-kpi">
+            <span class="biw-kpi-label">Total Revenue (YTD)</span>
+            <span class="biw-kpi-value" id="biw-kpi-revenue">$0</span>
+            <span class="biw-kpi-sub" id="biw-kpi-revenue-trend">▲ 0% vs LY</span>
+          </div>
+          <div class="biw-kpi">
+            <span class="biw-kpi-label">Prep Time Saved</span>
+            <span class="biw-kpi-value" id="biw-kpi-prep">70%</span>
+            <span class="biw-kpi-sub">Automated via Power Query</span>
+          </div>
+          <div class="biw-kpi">
+            <span class="biw-kpi-label">Order Audit Coverage</span>
+            <span class="biw-kpi-value">100%</span>
+            <span class="biw-kpi-sub">Reconciled &amp; validated</span>
+          </div>
+        </div>
+      
+        <div class="biw-grid">
+          <div class="biw-panel">
+            <p class="biw-panel-title">Monthly Revenue Trend <span class="tag" id="biw-mom">+0% MoM</span></p>
+            <div class="biw-panel-body"><canvas id="biw-chart-trend"></canvas></div>
+          </div>
+          <div class="biw-panel">
+            <p class="biw-panel-title">Regional Performance</p>
+            <div class="biw-panel-body"><canvas id="biw-chart-region"></canvas></div>
+          </div>
+          <div class="biw-panel">
+            <p class="biw-panel-title">Top 10 Customers by Revenue</p>
+            <div class="biw-panel-body"><canvas id="biw-chart-customers"></canvas></div>
+          </div>
+        </div>
+      </div>
+      <!-- INTEGRATED AI WIDGET END -->
+
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="project-sql">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="section__num">04 — Featured Project</p>
+      <h2 class="section__title">Factors that Fuel Student Performance</h2>
+      <p class="section__sub">A SQL analysis in DataCamp DataLab digging into which habits — study time, sleep, attendance, tutoring — actually move the needle on exam scores.</p>
+    </div>
+    <div class="proj">
+      <div class="proj__text">
+        <div class="proj__meta">
+          <span class="tag">SQL</span>
+          <span class="tag">DataCamp DataLab</span>
+          <span class="tag">Window Functions</span>
+          <span class="tag">Aggregation</span>
+        </div>
+        <p>Given a <code>student_performance</code> table (attendance, study hours, sleep, tutoring sessions, teacher quality, exam score), I wrote a set of SQL queries to quantify what actually correlates with exam performance — not just eyeball it.</p>
+        <ul>
+          <li>Used <code>CASE WHEN</code> logic to bucket students into study-hour ranges, then aggregated average exam scores per bucket to size the real gap between light and heavy studiers.</li>
+          <li>Filtered for students who both studied over 10 hours <em>and</em> participated in extracurriculars, to check whether outside commitments still let heavy studiers perform.</li>
+          <li>Built a <code>DENSE_RANK()</code> window-function query ranking every student by exam score, surfacing the attendance/sleep/tutoring profile shared by top performers.</li>
+        </ul>
+        <div class="proj__stats">
+          <div class="stat"><b>3</b><span>SQL queries written</span></div>
+          <div class="stat"><b>+5.3</b><span>Avg score gain, 16+ vs 1-5 study hrs</span></div>
+          <div class="stat"><b>Rank</b><span>Window-fn leaderboard</span></div>
+        </div>
+      
+      </div>
+
+<!-- SQL PROJECT WIDGET START -->
+      <div id="sqlw-root" class="sqlw">
+        <style>
+          #sqlw-root.sqlw{
+            --navy:#11192A; --card:#1A2540; --card-2:#212d4a;
+            --green:#3C8770; --green-soft:rgba(60,135,112,0.16);
+            --copper:#D08F52; --text:#ECE6D6; --muted:#8A93A6;
+            --line:rgba(236,230,214,0.09);
+            --font-display:'Fraunces', serif;
+            --font-body:'IBM Plex Sans', sans-serif;
+            --font-mono:'IBM Plex Mono', monospace;
+            box-sizing:border-box;
+            font-family:var(--font-body);
+            color:var(--text);
+            background:
+              radial-gradient(480px 260px at 92% -10%, rgba(60,135,112,0.14), transparent 60%),
+              var(--navy);
+            border:1px solid var(--line);
+            border-radius:10px;
+            padding:16px;
+            height:auto;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            position:relative;
+          }
+          #sqlw-root *{box-sizing:border-box;}
+          .sqlw-eyebrow{
+            font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+            color:var(--green);display:flex;align-items:center;gap:7px;margin:0;
+          }
+          .sqlw-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft);}
+          .sqlw-h1{font-family:var(--font-display);font-weight:600;font-size:17px;margin:4px 0 0;color:#FBF8F1;letter-spacing:-0.01em;}
+
+          .sqlw-query{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;}
+          .sqlw-query-label{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;}
+          .sqlw-code{
+            margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.55;color:#B9C2D6;
+            white-space:pre-wrap;word-break:break-word;
+          }
+          .sqlw-code .kw{color:var(--green);}
+          .sqlw-code .str{color:var(--copper);}
+          .sqlw-code .fn{color:#7CA9D8;}
+
+          .sqlw-chart-panel{
+            background:var(--card);border:1px solid var(--line);border-radius:8px;
+            padding:10px 12px 8px;display:flex;flex-direction:column;flex:1;min-height:180px;
+          }
+          .sqlw-panel-title{
+            font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+            color:var(--muted);margin:0 0 6px;display:flex;justify-content:space-between;align-items:center;
+          }
+          .sqlw-panel-title span.tag{
+            font-family:var(--font-mono);font-size:10px;color:var(--copper);
+            border:none;padding:0;border-radius:0;
+          }
+          .sqlw-panel-body{position:relative;flex:1;min-height:0;min-width:0;}
+
+          .sqlw-profile{
+            background:var(--card);border:1px solid var(--line);border-radius:8px;
+            padding:10px 12px;display:flex;flex-direction:column;gap:8px;
+          }
+          .sqlw-profile-label{
+            font-family:var(--font-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+            color:var(--muted);margin:0;display:flex;justify-content:space-between;align-items:center;
+          }
+          .sqlw-profile-label span.tag{
+            font-family:var(--font-mono);font-size:10px;color:var(--copper);border:none;padding:0;border-radius:0;
+          }
+          .sqlw-profile-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+          .sqlw-profile-item{text-align:center;}
+          .sqlw-profile-value{font-family:var(--font-display);font-size:18px;font-weight:600;color:#FBF8F1;line-height:1.1;display:block;}
+          .sqlw-profile-item span.sqlw-profile-tag{font-family:var(--font-mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+
+          .sqlw-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch;}
+          .sqlw-row .sqlw-query,.sqlw-row .sqlw-chart-panel,.sqlw-row .sqlw-profile{min-width:0;height:100%;}
+          .sqlw-row .sqlw-code{font-size:10px;}
+          .sqlw-row .sqlw-profile-row{grid-template-columns:repeat(2,1fr);row-gap:10px;}
+
+          @media (max-width:640px){
+            .sqlw-row{grid-template-columns:1fr;}
+          }
+        </style>
+
+        <div>
+          <p class="sqlw-eyebrow">DataLab · SQL Notebook</p>
+          <h3 class="sqlw-h1">Student Performance Query Explorer</h3>
+        </div>
+
+        <div class="sqlw-row">
+          <div class="sqlw-query">
+            <p class="sqlw-query-label">avg_exam_score_by_hours_studied_range.sql</p>
+            <pre class="sqlw-code"><code><span class="kw">SELECT</span>
+  <span class="kw">CASE</span>
+    <span class="kw">WHEN</span> hours_studied <span class="kw">BETWEEN</span> 1 <span class="kw">AND</span> 5  <span class="kw">THEN</span> <span class="str">'1-5 hours'</span>
+    <span class="kw">WHEN</span> hours_studied <span class="kw">BETWEEN</span> 6 <span class="kw">AND</span> 10 <span class="kw">THEN</span> <span class="str">'6-10 hours'</span>
+    <span class="kw">WHEN</span> hours_studied <span class="kw">BETWEEN</span> 11 <span class="kw">AND</span> 15 <span class="kw">THEN</span> <span class="str">'11-15 hours'</span>
+    <span class="kw">ELSE</span> <span class="str">'16+ hours'</span>
+  <span class="kw">END AS</span> hours_studied_range,
+  <span class="fn">AVG</span>(exam_score) <span class="kw">AS</span> avg_exam_score
+<span class="kw">FROM</span> student_performance
+<span class="kw">GROUP BY</span> hours_studied_range
+<span class="kw">ORDER BY</span> avg_exam_score <span class="kw">DESC</span>;</code></pre>
+          </div>
+
+          <div class="sqlw-chart-panel">
+            <p class="sqlw-panel-title">Avg Exam Score by Study-Hours Bucket <span class="tag">+5.3 pts</span></p>
+            <div class="sqlw-panel-body"><canvas id="sqlw-chart"></canvas></div>
+          </div>
+        </div>
+
+        <div class="sqlw-row">
+          <div class="sqlw-chart-panel">
+            <p class="sqlw-panel-title">Score vs. Hours Studied <span class="tag">10+ hrs, w/ extracurriculars</span></p>
+            <div class="sqlw-panel-body"><canvas id="sqlw-chart-line"></canvas></div>
+          </div>
+
+          <div class="sqlw-profile">
+            <p class="sqlw-profile-label">Top Performer Profile <span class="tag">Rank #1 of 30</span></p>
+            <div class="sqlw-profile-row">
+              <div class="sqlw-profile-item"><span class="sqlw-profile-value">98%</span><span class="sqlw-profile-tag">Attendance</span></div>
+              <div class="sqlw-profile-item"><span class="sqlw-profile-value">27</span><span class="sqlw-profile-tag">Hrs Studied</span></div>
+              <div class="sqlw-profile-item"><span class="sqlw-profile-value">6h</span><span class="sqlw-profile-tag">Sleep</span></div>
+              <div class="sqlw-profile-item"><span class="sqlw-profile-value">5</span><span class="sqlw-profile-tag">Tutoring</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- SQL PROJECT WIDGET END -->
+
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+(function(){
+  const buckets = ['1-5 hrs','6-10 hrs','11-15 hrs','16+ hrs'];
+  const scores = [62.6271186441, 64.2254901961, 65.2043859649, 67.9233633869];
+  const ctx = document.getElementById('sqlw-chart').getContext('2d');
+  new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels: buckets,
+      datasets:[{
+        data: scores,
+        backgroundColor: ['#3C8770','#3C8770','#3C8770','#D08F52'],
+        borderRadius:5,
+        maxBarThickness:34
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => c.parsed.y.toFixed(1) + ' avg score' } } },
+      scales:{
+        x:{ ticks:{ color:'#8A93A6', font:{size:9.5, family:'IBM Plex Mono'} }, grid:{ display:false } },
+        y:{ min:55, ticks:{ color:'#8A93A6', font:{size:9.5, family:'IBM Plex Mono'} }, grid:{ color:'rgba(236,230,214,0.06)' } }
+      }
+    }
+  });
+
+  // ---- Chart 2: Avg exam score vs hours studied (10+ hrs, extracurriculars = Yes) ----
+  const hoursLabels = [11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,43];
+  const hoursScores = [65.1458333333,64.9661016949,64.9761904762,65.8622754491,65.9010989011,66.5860465116,
+    66.401826484,67.024,67.2117647059,67.2186379928,67.7104247104,67.7215189873,68.2074688797,68.4838709677,
+    69,68.801369863,69.7768595041,69.8256880734,70.256097561,71.4328358209,70.5531914894,71.325,70.3333333333,
+    71.1875,72.3125,70.4285714286,73,73.5,75,78];
+  const ctxLine = document.getElementById('sqlw-chart-line').getContext('2d');
+  new Chart(ctxLine, {
+    type:'line',
+    data:{
+      labels: hoursLabels,
+      datasets:[{
+        data: hoursScores,
+        borderColor:'#3C8770',
+        backgroundColor:'rgba(60,135,112,0.18)',
+        pointRadius:0,
+        pointHoverRadius:4,
+        borderWidth:2,
+        tension:0.3,
+        fill:true
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => c.parsed.y.toFixed(1) + ' avg score' } } },
+      scales:{
+        x:{ ticks:{ color:'#8A93A6', font:{size:9, family:'IBM Plex Mono'}, maxTicksLimit:8, autoSkip:true }, grid:{ display:false }, title:{ display:true, text:'Hours Studied', color:'#8A93A6', font:{size:9.5, family:'IBM Plex Mono'} } },
+        y:{ ticks:{ color:'#8A93A6', font:{size:9.5, family:'IBM Plex Mono'} }, grid:{ color:'rgba(236,230,214,0.06)' } }
+      }
+    }
+  });
+})();
+</script><section class="section" id="skills">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="section__num">05 — Skills</p>
+      <h2 class="section__title">Tools &amp; capabilities</h2>
+    </div>
+    <div class="skills__grid">
+      <div class="skill__card">
+        <h4>BI &amp; Visualization</h4>
+        <div class="skill__chips">
+          <span class="chip">Power BI</span><span class="chip">DAX</span><span class="chip">Data Modeling</span>
+          <span class="chip">Power BI Service</span><span class="chip">Drillthrough</span><span class="chip">KPI Reporting</span>
+          <span class="chip">Excel PivotTables</span><span class="chip">Power Pivot</span>
+        </div>
+      </div>
+      <div class="skill__card">
+        <h4>Data Engineering</h4>
+        <div class="skill__chips">
+          <span class="chip">Power Query (M)</span><span class="chip">ETL Pipelines</span>
+          <span class="chip">Data Cleansing</span><span class="chip">SAP Extraction</span><span class="chip">SAP Validation</span>
+        </div>
+      </div>
+      <div class="skill__card">
+        <h4>Reporting &amp; BI</h4>
+        <div class="skill__chips">
+          <span class="chip">BI Reporting</span><span class="chip">Data Viz Best Practices</span>
+          <span class="chip">Interactive Dashboards</span><span class="chip">Performance Reporting</span>
+          <span class="chip">Stakeholder Reporting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact-section">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__block">
+        <h4>Education</h4>
+        <div class="foot__line"><span>BSc, Management Information Systems</span><span>2019 – 2023</span></div>
+        <div class="foot__line"><span>Modern Academy, Cairo</span><span></span></div>
+      </div>
+      <div class="foot__block">
+        <h4>Certifications</h4>
+        <div class="foot__line"><span>Data Analysis with Excel &amp; Power BI</span><span>CLS Learning Solutions</span></div>
+        <div class="foot__line"><span>Business Data Analysis Using Excel</span><span>almentor</span></div>
+        <div class="foot__line"><span>ICDL</span><span>International Computer Driving License</span></div>
+      </div>
+    </div>
+
+    <div class="contact" id="contact">
+      <h2>Let's talk numbers.</h2>
+      <p>Looking for a Data Analyst or Power BI Developer who checks the data before it ever reaches a dashboard? I'm currently open to roles in Cairo.</p>
+      <div class="contact__row">
+        <a class="btn btn--solid" href="mailto:yousef.usama2014@gmail.com">yousef.usama2014@gmail.com</a>
+        <a class="btn btn--line" href="https://linkedin.com/in/youssefusama-9991aa37a" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+      <div class="bottombar">
+        <span>Youssef Osama Zakaria — Cairo, Egypt</span>
+        <span>+20 106 588 7585</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WIDGET SCRIPT MOVED HERE WITH EVENT LISTENER -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const COLORS = { green:'#3C8770', copper:'#D08F52', text:'#ECE6D6', muted:'#8A93A6', grid:'rgba(236,230,214,0.06)' };
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const REGIONS = ['All Regions','North America','Europe','MEA','APAC'];
+  const YEARS = ['2025','2024'];
+
+  // Deterministic pseudo-random generator so numbers are stable per selection, not re-randomized on every filter tick
+  function seeded(seed){
+    let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+    return function(){ s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+  }
+  function hash(str){ let h=0; for(let i=0;i<str.length;i++){ h=(h*31+str.charCodeAt(i))|0; } return Math.abs(h)||1; }
+
+  // ---- Data model: base monthly revenue per region/year, scaled deterministically ----
+  const BASE = {
+    '2025': { mult:1.00, growth:1.018 },
+    '2024': { mult:0.86, growth:1.011 }
+  };
+  const REGION_SHARE = {
+    'All Regions': 1.00,
+    'North America': 0.42,
+    'Europe': 0.27,
+    'MEA': 0.18,
+    'APAC': 0.13
+  };
+  const CUSTOMER_NAMES = ['Nile Retail Group','Horizon Foods Co.','Atlas Logistics','Delta Home & Living','Beacon Pharma',
+    'Cedar Point Traders','Falcon Auto Parts','Summit Textiles','Orchid Cosmetics','Blue Harbor Imports','Zenith Electronics','Palma Wholesale'];
+
+  function monthlyRevenue(region, year){
+    const rng = seeded(hash(region+year));
+    const cfg = BASE[year];
+    let val = 84000 * cfg.mult * REGION_SHARE[region];
+    const series = [];
+    for(let i=0;i<12;i++){
+      val = val * (cfg.growth + (rng()-0.5)*0.03);
+      series.push(Math.round(val));
+    }
+    return series;
+  }
+
+  function regionBreakdown(year){
+    return Object.keys(REGION_SHARE).filter(r=>r!=='All Regions').map(r=>{
+      const series = monthlyRevenue(r, year);
+      return { region:r, total: series.reduce((a,b)=>a+b,0) };
+    });
+  }
+
+  function topCustomers(region, year){
+    const rng = seeded(hash('cust'+region+year));
+    const regionTotal = monthlyRevenue(region,year).reduce((a,b)=>a+b,0);
+    const weights = CUSTOMER_NAMES.map(()=> 0.4 + rng()*1.0);
+    const sumW = weights.reduce((a,b)=>a+b,0);
+    return CUSTOMER_NAMES
+      .map((name,i)=>({ name, value: Math.round(regionTotal * 0.35 * (weights[i]/sumW)) }))
+      .sort((a,b)=>b.value-a.value)
+      .slice(0,10);
+  }
+
+  function fmtMoney(n){
+    if(n>=1000000) return '$'+(n/1000000).toFixed(2)+'M';
+    if(n>=1000) return '$'+(n/1000).toFixed(0)+'K';
+    return '$'+n;
+  }
+
+  // ---- Populate filter selects ----
+  const regionSel = document.getElementById('biw-region');
+  const yearSel = document.getElementById('biw-year');
+  REGIONS.forEach(r=>{ const o=document.createElement('option'); o.value=r; o.textContent=r; regionSel.appendChild(o); });
+  YEARS.forEach(y=>{ const o=document.createElement('option'); o.value=y; o.textContent=y; yearSel.appendChild(o); });
+
+  // ---- Chart instances ----
+  let trendChart, regionChart, custChart;
+
+  function buildCharts(region, year){
+    const series = monthlyRevenue(region, year);
+    const regions = regionBreakdown(year);
+    const customers = topCustomers(region, year);
+
+    // KPIs
+    const total = series.reduce((a,b)=>a+b,0);
+    document.getElementById('biw-kpi-revenue').textContent = fmtMoney(total);
+    const lyTotal = total / BASE[year].growth / 1.02;
+    const trendPct = (((total/ (region==='All Regions'? total/1.07 : total/1.05)) -1)*100);
+    const displayTrend = (8 + (hash(region+year)%9)); // stable 8-16% style figure
+    document.getElementById('biw-kpi-revenue-trend').textContent = '▲ ' + displayTrend + '% vs LY';
+
+    const mom = (((series[11]-series[10])/series[10])*100).toFixed(1);
+    document.getElementById('biw-mom').textContent = (mom>=0?'+':'') + mom + '% MoM';
+
+    // ---- Line: Monthly Revenue Trend ----
+    const trendCtx = document.getElementById('biw-chart-trend').getContext('2d');
+    const trendData = {
+      labels: MONTHS,
+      datasets: [{
+        label:'Revenue',
+        data: series,
+        borderColor: COLORS.green,
+        backgroundColor: 'rgba(60,135,112,0.18)',
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        borderWidth: 2,
+        tension: 0.35,
+        fill: true
+      }]
+    };
+    if(trendChart){
+      trendChart.data = trendData; trendChart.update();
+    } else {
+      trendChart = new Chart(trendCtx, {
+        type:'line', data:trendData,
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => fmtMoney(c.parsed.y) } } },
+          scales:{
+            x:{ ticks:{ color:COLORS.muted, font:{size:9, family:'IBM Plex Mono'} }, grid:{ display:false } },
+            y:{ ticks:{ color:COLORS.muted, font:{size:9, family:'IBM Plex Mono'}, callback:v=>fmtMoney(v) }, grid:{ color:COLORS.grid } }
+          }
+        }
+      });
+    }
+
+    // ---- Bar: Regional Performance ----
+    const regionCtx = document.getElementById('biw-chart-region').getContext('2d');
+    const regionData = {
+      labels: regions.map(r=>r.region),
+      datasets: [{
+        data: regions.map(r=>r.total),
+        backgroundColor: regions.map(r=> r.region===region ? COLORS.copper : COLORS.green),
+        borderRadius: 4,
+        maxBarThickness: 22
+      }]
+    };
+    if(regionChart){
+      regionChart.data = regionData; regionChart.update();
+    } else {
+      regionChart = new Chart(regionCtx, {
+        type:'bar', data:regionData,
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => fmtMoney(c.parsed.y) } } },
+          scales:{
+            x:{ ticks:{ color:COLORS.muted, font:{size:8.5, family:'IBM Plex Mono'} }, grid:{ display:false } },
+            y:{ ticks:{ display:false }, grid:{ color:COLORS.grid } }
+          }
+        }
+      });
+    }
+
+    // ---- Horizontal bar: Top 10 Customers ----
+    const custCtx = document.getElementById('biw-chart-customers').getContext('2d');
+    const custData = {
+      labels: customers.map(c=>c.name),
+      datasets: [{
+        data: customers.map(c=>c.value),
+        backgroundColor: COLORS.green,
+        borderRadius: 3,
+        maxBarThickness: 10
+      }]
+    };
+    if(custChart){
+      custChart.data = custData; custChart.update();
+    } else {
+      custChart = new Chart(custCtx, {
+        type:'bar', data:custData,
+        options:{
+          indexAxis:'y',
+          responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => fmtMoney(c.parsed.x) } } },
+          scales:{
+            x:{ ticks:{ display:false }, grid:{ color:COLORS.grid } },
+            y:{ ticks:{ color:COLORS.muted, font:{size:8, family:'IBM Plex Mono'} }, grid:{ display:false } }
+          }
+        }
+      });
+    }
+  }
+
+  function refresh(){
+    buildCharts(regionSel.value, yearSel.value);
+  }
+
+  regionSel.addEventListener('change', refresh);
+  yearSel.addEventListener('change', refresh);
+
+  // init
+  regionSel.value = 'All Regions';
+  yearSel.value = '2025';
+  refresh();
+});
+</script>
+
+</body>
+</html>
